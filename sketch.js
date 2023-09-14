@@ -1,77 +1,84 @@
-function setup()
-{
+function setup() {
   createCanvas(400, 400);
-  background(90, 0, 110)
+}
 
-  //my hair
-  fill(0, 0, 0)
-  stroke(80, 40, 0)
-  strokeWeight(3)
-  ellipse(200, 260, 260, 450)
+function draw() {
+  background(0, 0, 0);
+  for (let k = 0; k < 30; k++) {
+    noFill()
+    stroke(180, 0, 250)
+    strokeWeight(5, 10)
+    let s = random(0, 500)
+    triangle(s, s+random(30, 100), s+random(10, 100), s-random(20, 100), s+random(20, 100), s+random(20, 100))
+  }
+  for(let k=0; k<200; k++) {
+    noFill()
+    stroke(180, 0, 250)
+    strokeWeight(5, 10)
+    rect(random(0, 400), random(0, 400), random(1, 20), random(1, 20))
+  }
 
-  //my ears and earrings
-  fill(220, 160, 50)
-  ellipse(108, 170, 20, 55)
-  ellipse(292, 170, 20, 55)
-
-  //my shirt
-  stroke(80, 0, 80)
-  strokeWeight(3)
-  fill(170, 0, 200)
-  rect(80, 280, 230, 200, 70)
-
-  //shirt text
+  //table
   noStroke()
-  fill(225, 225, 225)
-  textSize(30)
-  text("J U L I E", 135, 370);
+  fill(200, 200, 0)
+  rect(0, 250, 400, 150)
 
-  //filling and shaping the head
-  stroke(120, 60, 0)
-  strokeWeight(2)
-  fill(220, 160, 50)
-  ellipse(200, 173, 180, [230])
+  for(let k = 0; k<200; k++) {
+    noFill()
+    stroke(0, 10, 0)
+    strokeWeight(0.8)
+    ellipse(random(0, 400), random(250, 400), random(10, 15))
+  }
 
-  //bangs
+  //melon
+  noStroke()
+  fill(180, 0, 0)
+  angleMode(DEGREES)
+  arc(200, 150, 250, 300, 0, 180)
+  fill(230, 230, 230)
+  arc(200, 150, 220, 250, 0, 180)
+  fill(0, 230, 250)
+  arc(200, 240, 148, 70, 0, 180)
+
+  //seeds
+  for (let i = 0; i < 35; i++) {
+    fill(0, 0, 0)
+    noStroke()
+    ellipse(random(110, 280), random(120, 220), random(7, 10))
+  }
+  for (let i = 0; i < 25; i++) {
+    fill(180, 0, 0)
+    noStroke()
+    ellipse(random(120, 290), random(150, 270), 6)
+  }
+  for (let i = 0; i < 50; i++) {
+    fill(180, 0 ,0)
+    ellipse(random(90, 310), random(150, 250), random(1, 4))
+  }
+
+  //forks and spoons
+  noFill()
+  stroke(180, 0, 0)
+  strokeWeight(8)
+  arc(40, 280, 30, 60, 0, 180)
+  line(41, 280, 41, 350)
+  
+  stroke(0, 0, 0)
+  arc(360, 280, 30, 60, 0, 180)
+  line(361, 280, 361, 350)
+
+  noStroke()
   fill(0, 0, 0)
-  bezier(103, 113, 157, 110, 176, 90, 200, 38)
-  bezier(188, 38, 221, 88, 251, 102, 288, 100)
-
-  //my mouth
-  fill(120, 0, 40, 150)
-  arc(196, 230, 40, 50, 0.5, PI + QUARTER_PI, OPEN);
-
-  //my nose
-  noFill()
-  stroke(200, 120, 0)
-  bezier(200, 178, 190, 182, 193, 193, 200, 200)
-
-  //my eyebrows
-  noFill()
+  ellipse(150, 330, 40, 50)
   stroke(0, 0, 0)
-  bezier(126, 133, 137, 124, 152, 122, 166, 126)
-  bezier(226, 126, 237, 122, 252, 124, 266, 133)
+  strokeWeight(8)
+  line(150, 350, 150, 390)
 
-  //my eyes
-  stroke(0, 0, 0)
-  strokeWeight(1)
-  fill(200, 200, 200)
-  ellipse(150, 155, 40, 20)
-  ellipse(250, 155, 40, 20)
-  fill(80, 60, 0)
-  ellipse(155, 155, 18, 18)
-  ellipse(255, 155, 18, 18)
+  noStroke()
+  fill(180, 0, 0)
+  ellipse(250, 330, 40, 50)
+  stroke(180, 0, 0)
+  strokeWeight(8)
+  line(250, 350, 250, 390)
 
-  //earrings
-  noFill()
-  stroke(255, 204, 0)
-  strokeWeight(4)
-  ellipse(107, 212, 10, 30)
-  ellipse(291, 212, 10, 30)
-}
-
-function mousePressed()
-//this function will tell you in the console (right click, inspect) what point you clicked
-{
-  console.log(mouseX + "," + mouseY)
-}
+  }
