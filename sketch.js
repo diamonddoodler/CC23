@@ -1,41 +1,32 @@
-let xPos, yPos;
+let x, y
+let xDir, yDir
+let r = 25
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //colorMode(HSB) //hue, saturation, brightness
-  xPos = 0;
-  yPos = height / 2
-}
-/*
-A point that grows with time
-function draw() {
-  background(220);
-  ellipse(xPos, yPos, 100);
-  if(mouseIsPressed == true) {
-    ellipse(width/2, height/2, 100, 100)
-  }
-  if(!mouseIsPressed) { //! means "not"
-    rect(width/2, height/2, 50, 50)
-  }
+  x = width/2
+  y = height/2
 
-  xPos = xPos+0.25 //moves the ball right
+  xDir = random(3, 8)
+  yDir = random(3, 8)
 }
-*/
 
 function draw() {
-  background(0);
-  let randNum = random(0, 4)
-  randNum = floor(randNum)
-  if(randNum == 0) {
-    x++
-  } else if(randNum == 1) {
-    x--;
-  } else if(randNum == 2) {
-    y++;
-  } else if(randNum == 3) {
-    y--;
+  //background(0);
+  r = random(20, 60)
+  ellipse(x, y, r*2)
+
+  if (x>=windowWidth-r || x<= r) {
+    xDir *= -1
+    fill(random(255), random(255), random(255))
+    background(random(0, 225), random(0, 255), random(0, 255))
   }
-  stroke(255)
-  stroke(255)
-  point(xPos, yPos)
+  if (y>=windowHeight-r || y<=r) {
+    yDir *= -1
+    fill(random(255), random(255), random(255))
+    background(random(0, 225), random(0, 255), random(0, 255))
+  }
+
+  x = x+xDir
+  y = y+yDir
 }
