@@ -1,0 +1,58 @@
+let xpos, ypos, yspeed;
+let increase = 1.08
+let size = 25;
+let popped = false;
+let exploded = false;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  xpos = width/2;
+  ypos = -2;
+  yspeed = 0.4;
+}
+
+function draw() {
+  background(0);
+  ypos += yspeed;
+  yspeed *= increase;
+
+  if (ypos >= height - 100) {
+    size += 70; //rate at which balloon grows when popping
+    yspeed = 0.9;
+  }
+
+  if (size >= 500) {
+    textSize(50)
+    fill(255)
+    text("pop!", width/2, height - 400);
+    noLoop(); //<-- means to stop drawing
+    popped = true;
+    xpos = -1000; //moves ball off screen
+  }
+
+  fill(180, 0, 190);
+  triangle(width/2 - 20, height, width/2, height-90, width/2 + 20, height);
+  fill(200, 200, 0);
+  ellipse(xpos, ypos, size);
+  
+  if(popped) {
+    noStroke();
+    push();
+    angleMode(DEGREES);
+    translate(width/2, height-90);
+    for (let i = 0; i<360; i+=36) {
+      rotate(36);
+      //add drops/shreds here for pop effect
+      fill(200, 200, 0);
+      rect(0,10,60,1);
+    }
+    pop();
+    size = 1;
+    exploded = true;
+  }
+
+  if(exploded) {
+    noLoop();
+    popped = false;
+  }
+}
