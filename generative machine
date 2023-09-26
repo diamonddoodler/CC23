@@ -1,0 +1,82 @@
+let size = 5;
+
+function setup() {
+  //make canvas, establish white background
+  createCanvas(windowWidth, windowHeight);
+  background(255);
+  textSize(16)
+  fill(0)
+  textFont("Times New Roman")
+  text("Welcome to the symmetry painter! Make snowflakes, butterflies, inkblots, mandalas,\nor anything else you think of.\n\nType numbers 1-5 for differnt pen sizes.\nType in letters and discover what colors your pen can change to! (HINT: try b, r, y, g, o, p, n, s)\nDraw slowly to produce solid lines and quickly to make dots.\nPRESS SPACE TO HIDE TEXT AND CLEAR YOUR DRAWING.", 10, 20)
+  if (key == 'x') {
+    fill(255)
+  }
+  }
+
+function draw() {
+  //establish a "pen" for user to draw with
+  stroke(0);
+  line(width / 2, 0, width / 2, height);
+}
+
+function mousePressed() {
+  //when mouse is pressed, the mouse will leave a mark on that spot as well as on the place opposite of the press
+  noStroke();
+  ellipse(mouseX, mouseY, 5, 5);
+  ellipse(width - mouseX, mouseY, 5, 5);
+}
+
+function mouseDragged() {
+  //when mouse is dragged, the mouse will draw where it's positioned as well as on the place opposite the y-axis
+  noStroke();
+  ellipse(mouseX, mouseY, size)
+  ellipse(width - mouseX, mouseY, size, size);
+}
+
+function keyPressed() {
+  //changing color of pen based on what key the user presses
+  if (key === 'r') {
+    fill("red")
+  }
+  else if (key === 'b') {
+    fill("black");
+  }
+  else if (key == 'p') {
+    fill("purple")
+  }
+  else if (key == 'g') {
+    fill("green")
+  }
+  else if (key == 'y') {
+    fill("yellow")
+  }
+  else if (key == 'o') {
+    fill("orange")
+  }
+  else if (key == 's') {
+    fill("grey")
+  }
+  else if (key == 'n') {
+    fill("navy")
+  }
+  //erases drawing if you press space
+  else if (key == ' ') {
+    background(255)
+  }
+  //changing size of pen based on what key the user presses
+  if (key == '1') {
+    size = 5
+  }
+  else if (key == '2') {
+    size = 9
+  }
+  else if (key == '3') {
+    size = 14
+  }
+  else if (key == '4') {
+    size = 19
+  }
+  else if (key == '5') {
+    size = 25
+  }
+}
