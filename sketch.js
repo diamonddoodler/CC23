@@ -1,67 +1,49 @@
-let myTri
-let myTri2
-let myTri3
-//let numTri = random(5, 15)
+let x, y
+let xDir, yDir
+let r = 20
+let ballColor = 255
+let button;
+let clicked
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
-  myTri = new Tri()
-  myTri2 = new Tri()
-  myTri3 = new Tri()
 
-  /*
-  for (let i = 0; i < numTri; i++) {
-    myTri[i] = new Tri()
-  }
-  */
+  xDir = random(-10, 10);
+  yDir = random(-10, 10);
+  x = width/2
+  y = height/2
+  noStroke()
+  
+  button = createButton("Do you like... colors?");
+  button.position(windowWidth/2-55, windowHeight/2);
+  button.mousePressed(clickedBut);
 }
 
 function draw() {
-  background(0);
-
-  /*
-  for (let i = 0; i < numTri; i++) {
-    myTri[i].render()
-    myTri[i].strobe()
+  background(0)
+  fill(ballColor)
+  
+  if (x>=windowWidth-r || x<= r) {
+    xDir *= -1
   }
-  */
+  if (y>=windowHeight-r || y<=r) {
+    yDir *= -1
+  }
 
-  myTri.render()
-  myTri.strobe()
+  x = x+xDir
+  y = y+yDir
+  
+  if (clicked) {
+    fill(random(ballColor), random(ballColor), random(ballColor))
+  }
 
-  myTri2.render()
-  myTri2.strobe()
-
-  myTri3.render()
-  myTri3.strobe()
+  else {
+    fill(ballColor)
+  }
+  
+  ellipse(x, y, r*2)
 }
 
-class Tri {
-  constructor() {
-    this.col = color(random(255), random(255), random(255))
-    this.x = random(width)
-    this.y = random(height)
-    this.x2 = random(width)
-    this.y2 = random(height)
-    this.x3 = random(width)
-    this.y3 = random(height)
-    
-    this.xdir = random(1, 15)
-    this.ydir = random(1, 15)
-    this.size = random(30, 300)
-    this.stroke = random(1, 10)
-  }
-
-  render() {
-    noFill()
-    stroke(this.col)
-    strokeWeight(this.stroke)
-    triangle(this.x, this.y, this.x2, this.y2, this.x3, this.y3)
-  }
-
-  strobe() {
-    this.x += this.xdir
-    this.y += this.ydir
-  }
+function clickedBut() {
+  clicked = true;
 }
