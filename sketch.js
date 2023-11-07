@@ -1,50 +1,72 @@
-let data;
-let val;
-let api = "https://taylorswiftapi.onrender.com/get";
-//"https://taylor-swift-api.sarbo.workers.dev/albums";
-let input;
-let name;
+// Classifier Variable
+let classifier;
+// Model URL
+let imageModelURL = 'https://teachablemachine.withgoogle.com/models/_81zbs4jl/';
 
-let cors = 'https://corsproxy.io/?';
+// Video
+let video;
+let flippedVideo;
+// To store the classification
+let label = "";
 
+// Load the model first
 function preload() {
-  let url = cors + api;
-  data = loadJSON(url);
+  classifier = ml5.imageClassifier(imageModelURL + 'model.json');
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  console.log("Random album: " + data.album);
-  console.log("Random song: " + data.song);
-  console.log("Random lyrics: " + data.quote);
-  input = createInput("");
-  input.position(windowWidth/2 - 200, 250);
-  input.size(300)
-  button = createButton("SUBMIT");
-  button.position(windowWidth/2 + 100, 250);
-  button.mousePressed(submit);
-  name = input.value();
+  createCanvas(320, 260);
+  // Create the video
+  video = createCapture(VIDEO);
+  video.size(320, 240);
+  video.hide();
+
+  flippedVideo = ml5.flipImage(video)
+  // Start classifying
+  classifyVideo();
 }
 
 function draw() {
-  background("purple");
-  fill("gold")
-  textSize(40)
-  textFont('Garamond');
-  text("Random Taylor Swift Lyric Generator", windowWidth/2 - 300, 150)
-  textSize(25)
-  text("Type in an album to get a random lyric from a random song:", windowWidth/2 - 300, 200)
+  background(0);
+  // Draw the video
+  image(flippedVideo, 0, 0);
+
+  // Draw the label
+  fill(255);
+  textSize(16);
+  textAlign(CENTER);
+  text(label, width / 2, height - 4);
   
-  fill("white")
-  textSize(30)
-  text("Random album:  " + data.album, windowWidth/2 - 250, 400)
-  text("Random song:  " + data.song, windowWidth/2 - 250, 450)
-  textSize(20)
-  text("Random lyrics:  '" + data.quote + "'", 25, 500)
+  if (label == "Your mouth is closed") {
+      textSize(50);
+      text("😐", width-60, height);
+  }
+  else if (label == "Your mouth is open") {
+    textSize(50);
+    text("😮", width-60, height);
+  }
+  else if (label == "Where are you?") {
+    textSize(50);
+    text("🤔", width-60, height);
+  }
 }
 
-function submit() {
-  textSize(30);
-  fill("white");
-  text(name, windowWidth/2-100, 400);
+// Get a prediction for the current video frame
+function classifyVideo() {
+  flippedVideo = ml5.flipImage(video)
+  classifier.classify(flippedVideo, gotResult);
+}
+
+// When we get a result
+function gotResult(error, results) {
+  // If there is an error
+  if (error) {
+    console.error(error);
+    return;
+  }
+  // The results are in an array ordered by confidence.
+  // console.log(results[0]);
+  label = results[0].label;
+  // Classifiy again!
+  classifyVideo();
 }
