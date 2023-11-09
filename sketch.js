@@ -1,72 +1,54 @@
-// Classifier Variable
-let classifier;
-// Model URL
-let imageModelURL = 'https://teachablemachine.withgoogle.com/models/_81zbs4jl/';
-
-// Video
-let video;
-let flippedVideo;
-// To store the classification
-let label = "";
-
-// Load the model first
-function preload() {
-  classifier = ml5.imageClassifier(imageModelURL + 'model.json');
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  confet = new Confetti()
+  confet2 = new Confetti()
+  confet3 = new Confetti()
+  confet4 = new Confetti()
+  confet5 = new Confetti()
+  confet6 = new Confetti()
+  confet7 = new Confetti()
 }
 
-function setup() {
-  createCanvas(320, 260);
-  // Create the video
-  video = createCapture(VIDEO);
-  video.size(320, 240);
-  video.hide();
-
-  flippedVideo = ml5.flipImage(video)
-  // Start classifying
-  classifyVideo();
+class Confetti {
+  constructor() {
+    this.col = color(random(255), random(255), random(255))
+    this.pos = createVector(random(0, width))
+    this.vel = createVector(random(-5, 5), random(1, 10))
+    this.stroke = random(6, 30)
+    this.size = random(30, 100)
+  }
+  
+  render() {
+    stroke(this.col)
+    strokeWeight(this.stroke)
+    point(this.pos)
+  }
+  
+  update() {
+    this.pos.add(this.vel)
+  }
 }
 
 function draw() {
   background(0);
-  // Draw the video
-  image(flippedVideo, 0, 0);
+  confet.render()
+  confet.update()
 
-  // Draw the label
-  fill(255);
-  textSize(16);
-  textAlign(CENTER);
-  text(label, width / 2, height - 4);
+  confet2.render()
+  confet2.update()
+
+  confet3.render()
+  confet3.update()
   
-  if (label == "Your mouth is closed") {
-      textSize(50);
-      text("😐", width-60, height);
-  }
-  else if (label == "Your mouth is open") {
-    textSize(50);
-    text("😮", width-60, height);
-  }
-  else if (label == "Where are you?") {
-    textSize(50);
-    text("🤔", width-60, height);
-  }
-}
-
-// Get a prediction for the current video frame
-function classifyVideo() {
-  flippedVideo = ml5.flipImage(video)
-  classifier.classify(flippedVideo, gotResult);
-}
-
-// When we get a result
-function gotResult(error, results) {
-  // If there is an error
-  if (error) {
-    console.error(error);
-    return;
-  }
-  // The results are in an array ordered by confidence.
-  // console.log(results[0]);
-  label = results[0].label;
-  // Classifiy again!
-  classifyVideo();
+  confet4.render()
+  confet4.update()
+  
+  confet5.render()
+  confet5.update()
+  
+  confet6.render()
+  confet6.update()
+  
+  confet7.render()
+  confet7.update()
 }
